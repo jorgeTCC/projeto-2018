@@ -4,6 +4,8 @@ namespace App\Providers;
 
 use Illuminate\Support\Facades\Gate;
 use Illuminate\Foundation\Support\Providers\AuthServiceProvider as ServiceProvider;
+use App\Empresa;
+use App\User;
 
 class AuthServiceProvider extends ServiceProvider
 {
@@ -24,7 +26,10 @@ class AuthServiceProvider extends ServiceProvider
     public function boot()
     {
         $this->registerPolicies();
-
+        
+        Gate::define('atualizar-empresa', function(User $user, Empresa $empresa){
+            return $user->id == $empresa->user_id;
+        });
         //
     }
 }
