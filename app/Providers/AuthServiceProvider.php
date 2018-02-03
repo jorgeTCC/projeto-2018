@@ -6,6 +6,7 @@ use Illuminate\Support\Facades\Gate;
 use Illuminate\Foundation\Support\Providers\AuthServiceProvider as ServiceProvider;
 use App\Empresa;
 use App\User;
+use App\Permission;
 
 class AuthServiceProvider extends ServiceProvider
 {
@@ -15,7 +16,7 @@ class AuthServiceProvider extends ServiceProvider
      * @var array
      */
     protected $policies = [
-        'App\Model' => 'App\Policies\ModelPolicy',
+        \App\Empresa::class => \App\Policies\EmpresaPolicy::class,
     ];
 
     /**
@@ -26,10 +27,15 @@ class AuthServiceProvider extends ServiceProvider
     public function boot()
     {
         $this->registerPolicies();
-        
-        Gate::define('atualizar-empresa', function(User $user, Empresa $empresa){
-            return $user->id == $empresa->user_id;
-        });
-        //
+        $permissions = Permission::with('roles')->get();
+        foreach ($permissions as $permission){
+            Gate::define($permission->name, function (User $user) use ($permission) {
+                return $user->hasPermission($permission);
+            });
+        }
+        Gate::before(function(User $user, $ability){
+            if($user->hasAnyRoles('Administrador'))
+                return true;
+            });
     }
 }

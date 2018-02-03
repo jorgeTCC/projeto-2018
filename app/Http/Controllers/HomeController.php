@@ -25,9 +25,7 @@ class HomeController extends Controller
      */
     public function index(Empresa $empresa)
     {
-        //$empresas = $empresa->all();
-        $empresas = $empresa->where('user_id', auth()->user()->id)->get();
-
+        $empresas = $empresa->all();
         return view('home', compact('empresas'));
     }
     public function update($idEmpresa){
@@ -37,5 +35,8 @@ class HomeController extends Controller
         if(Gate::denies('atualizar-empresa', $empresa) )
                 abort (403, 'Não autorizado');
         return view('empresas.atualizar-empresa', compact('empresa'));
+    }
+    public function rolesPermissions(){
+        return 'Roles and Permissions to User';
     }
 }
