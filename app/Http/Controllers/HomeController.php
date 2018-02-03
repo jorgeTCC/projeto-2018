@@ -34,7 +34,7 @@ class HomeController extends Controller
         //$this->authorize('atualizar-empresa', $empresa); bloquear que outros usuários editem empresas de terceiros
         if(Gate::denies('atualizar-empresa', $empresa) )
                 abort (403, 'Não autorizado');
-        return view('empresas.atualizar-empresa', compact('empresa'));
+        return view('painel.empresas.atualizar-empresa', compact('empresa'));
     }
     public function rolesPermissions(){
         return 'Roles and Permissions to User';

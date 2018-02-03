@@ -16,8 +16,16 @@ Route::get('/', function () {
 });
 
 Auth::routes();
+Route::group(['prefix' => 'dashboard'], function(){
+   Route::get('/home', 'HomeController@index')->name('home');
 
-Route::get('/home', 'HomeController@index')->name('home');
-Route::get('empresa/{id}/update', 'HomeController@update');
-Route::get('roles-permissions', 'HomeController@rolesPermissions');
+   //PainelController
+   //EmpresaController
+   //PermissionController
+   //RoleController
+});
+
+Route::get('/home', 'EmpresaController@index')->name('home');
+Route::get('empresa/{id}/update', 'EmpresaController@update');
+Route::get('roles-permissions', 'EmpresaController@rolesPermissions');
 
