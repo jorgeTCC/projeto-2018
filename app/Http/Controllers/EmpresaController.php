@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Empresa;
+use Auth;
 use Gate;
 
 class EmpresaController extends Controller
@@ -36,7 +37,7 @@ class EmpresaController extends Controller
      */
     public function create()
     {
-        //
+        return view('dashboard.empresas.create');
     }
 
     /**
@@ -47,7 +48,11 @@ class EmpresaController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $dados = $request->all();
+        $dados['user_id'] = Auth::user()->id;
+        Empresa::create($dados);
+        return redirect()->route('empresas.index')
+                        ->with('success','Empresa cadastrada com sucesso');
     }
 
     /**

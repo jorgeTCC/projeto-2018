@@ -3,7 +3,7 @@
 @section('content')
 <div class="container-fluid">
     <h1 class="ls-title-intro ls-ico-dashboard">Empresas</h1>
-    <a href="/locawebstyle/documentacao/exemplos/painel1/new-client" class="ls-btn-primary">Cadastrar</a>
+    <a href="{{ route('empresas.create') }}" class="ls-btn-primary">Cadastrar</a>
 
     <div class="ls-box-filter">
         <form action="" class="ls-form ls-form-inline ls-float-left">
@@ -46,7 +46,7 @@
             @can('view_empresa', $empresa)
             <tr>
                 <td><a href="{{ route('empresas.show',$empresa->id) }}">{{$empresa->nome}}</a></td>
-                <td class="ls-txt-center hidden-xs">00.000.000/0000-00</td>
+                <td class="ls-txt-center hidden-xs">{{$empresa->cnpj}}</td>
                 <td class="ls-txt-center hidden-xs">{{$empresa->user->name}}</td>
                 <td class="ls-txt-center">4</td>
                 <td class="ls-txt-center">1</td>
@@ -62,7 +62,11 @@
             </tr>
             @endcan
             @empty
-        <p>Nenhuma empresa cadastrada</p>
+            <tr>
+                <td>
+                    <p>Nenhuma empresa cadastrada</p>
+                </td>
+            </tr>
         @endforelse
 
         </tbody>
