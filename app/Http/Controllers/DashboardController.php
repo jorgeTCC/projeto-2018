@@ -3,30 +3,25 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\User;
 use App\Empresa;
-use Gate;
+use App\Role;
+use App\Permission;
 
-class EmpresaController extends Controller
+class DashboardController extends Controller
 {
-    /**
-     * Create a new controller instance.
-     *
-     * @return void
-     */
-    public function __construct()
-    {
-        $this->middleware('auth');
-    }
-    
     /**
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response
      */
-    public function index(Empresa $empresa)
+    public function index()
     {
-        $empresas = $empresa->all();
-        return view('dashboard.empresas.index', compact('empresas'));
+        $totalUsers = User::count();
+        $totalEmpresa = Empresa::count();
+        $totalRole = Role::count();
+        $totalPermission = Permission::count();
+        return view('dashboard.home', compact('totalUsers' , 'totalEmpresa', 'totalRole', 'totalPermission'));
     }
 
     /**
@@ -79,16 +74,9 @@ class EmpresaController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update($idEmpresa){
-        $empresa = Empresa::find($idEmpresa);
-        
-        //$this->authorize('atualizar-empresa', $empresa); bloquear que outros usuários editem empresas de terceiros
-        if(Gate::denies('atualizar-empresa', $empresa) )
-                abort (403, 'Não autorizado');
-        return view('painel.empresas.atualizar-empresa', compact('empresa'));
-    }
-    public function rolesPermissions(){
-        return 'Roles and Permissions to User';
+    public function update(Request $request, $id)
+    {
+        //
     }
 
     /**
