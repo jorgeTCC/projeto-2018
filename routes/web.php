@@ -18,7 +18,9 @@ Route::get('/', function () {
 Auth::routes();
 Route::group(['prefix' => 'dashboard'], function(){
    Route::get('/', 'DashboardController@index')->name('home');
+   Route::resource('colaboradores','ColaboradorController');
    Route::resource('empresas','EmpresaController');
+   Route::resource('areas','AreaController');
    Route::get('/home', 'HomeController@index')->name('home');
 
    //PainelController

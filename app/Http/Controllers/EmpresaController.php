@@ -4,11 +4,13 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Empresa;
+use App\Area;
 use Auth;
 use Gate;
 
 class EmpresaController extends Controller
 {
+    private $area;
     /**
      * Create a new controller instance.
      *
@@ -28,6 +30,10 @@ class EmpresaController extends Controller
     {
         $empresas = $empresa->all();
         return view('dashboard.empresas.index', compact('empresas'));
+        
+        
+        
+        
     }
 
     /**
@@ -63,7 +69,10 @@ class EmpresaController extends Controller
      */
     public function show($id)
     {
-        //
+        $empresa = Empresa::find($id);
+        $areas = Area::where('empresa_id', $id)->get();        
+        $qtdareas = Area::where('empresa_id', $id)->count();
+        return view('dashboard.empresas.show', compact('empresa', 'areas', 'qtdareas'));        
     }
 
     /**

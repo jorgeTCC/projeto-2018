@@ -9,7 +9,8 @@ class Empresa extends Model
     protected $fillable = [
         'cnpj', 'nome', 'user_id', 'email',
     ];
-    public function user(){
+    public function user()
+    {
         return $this->belongsTo(User::class);
     }
 }
