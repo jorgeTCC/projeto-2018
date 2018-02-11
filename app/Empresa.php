@@ -13,4 +13,9 @@ class Empresa extends Model
     {
         return $this->belongsTo(User::class);
     }
+    
+    public function areas()
+    {
+       return $this->hasMany(Area::class);
+    }
 }

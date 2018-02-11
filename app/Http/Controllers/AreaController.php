@@ -38,13 +38,10 @@ class AreaController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request, Empresa $empresa)
+    public function store(Request $request)
     {
-        $dados = $request->all();
-        $dados['empresa_id'] = $empresa->id;
-        $dados['user_id'] = Auth::user()->id;
-        Area::create($dados);
-        return Redirect::to('dashboard/empresas/1/#cadastrarArea')->with('success','Empresa cadastrada com sucesso');
+        $empresa = Empresa::find(2);
+        $area = $empresa->areas()->create($request->all());
     }
 
     /**

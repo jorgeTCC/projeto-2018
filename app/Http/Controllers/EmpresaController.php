@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Empresa;
 use App\Area;
+use App\User;
 use Auth;
 use Gate;
 
@@ -54,9 +55,8 @@ class EmpresaController extends Controller
      */
     public function store(Request $request)
     {
-        $dados = $request->all();
-        $dados['user_id'] = Auth::user()->id;
-        Empresa::create($dados);
+        $user = User::find(Auth::user()->id);
+        $empresa = $user->empresas()->create($request->all());
         return redirect()->route('empresas.index')
                         ->with('success','Empresa cadastrada com sucesso');
     }

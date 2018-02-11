@@ -45,4 +45,8 @@ class User extends Authenticatable
         
         return $this->roles->contains('name', $roles);
     }
+    public function empresas()
+    {
+       return $this->hasMany(Empresa::class);
+    }
 }

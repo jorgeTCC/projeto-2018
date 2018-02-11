@@ -50,7 +50,7 @@
                                 @forelse( $areas as $area )
                                 <tr>
                                     <td><a href="" title="">{{$area->name}}</a></td>
-                                    <td class="hidden-xs">{{$area->user->name}}</td>
+                                    <td class="hidden-xs">$area->user->name</td>
                                     <td>1</td>
                                 </tr>
                                 @empty
@@ -72,7 +72,7 @@
         </div>
         <div class="col-md-6">
             <div class="ls-box">
-                <button data-ls-module="modal" data-target="#cadastrarProfissional" class="ls-btn-primary">Cadastrar Profissional</button>
+                <button data-ls-module="modal" data-target="#cadastrarProfissional" class="ls-btn-primary ls-ico-user">Novo Profissional</button>
                 <div class="ls-modal" id="cadastrarProfissional">
                     <div class="ls-modal-box">
                         <div class="ls-modal-header">
@@ -116,7 +116,7 @@
                         </div>
                     </div>
                 </div><!-- /.modal -->                
-                <button data-ls-module="modal" data-target="#cadastrarArea" class="ls-btn-primary">Cadastrar área</button>
+                <button data-ls-module="modal" data-target="#cadastrarArea" class="ls-btn-primary ls-ico-tree">Nova área</button>
                 <div class="ls-modal" id="cadastrarArea">
                     <div class="ls-modal-box">
                         <div class="ls-modal-header">
@@ -148,7 +148,51 @@
                             {!! Form::close() !!}
                         </div>
                     </div>
-                </div><!-- /.modal -->            
+                </div><!-- /.modal -->     
+                <button data-ls-module="modal" data-target="#cadastrarProfissional" class="ls-btn-primary ls-ico-stats">Nova avaliação</button>
+                <div class="ls-modal" id="cadastrarProfissional">
+                    <div class="ls-modal-box">
+                        <div class="ls-modal-header">
+                            <button data-dismiss="modal">&times;</button>
+                            <h4 class="ls-modal-title">Cadastrar novo profissional</h4>                            
+                            @if ($message = Session::get('success'))
+                            <hr>
+                            <div class="ls-alert-success ls-dismissable">
+                                <span data-ls-module="dismiss" class="ls-dismiss">&times;</span>
+                                <strong>Sucesso!</strong> {{ $message }}
+                            </div>
+                            @endif                            
+                        </div>
+                        <div class="ls-modal-body" id="myModalBody">
+                            {!! Form::open(['route' => 'colaboradores.store']) !!}
+                            <fieldset class="col-md-12">
+                                <label class="ls-label">
+                                    <b class="ls-label-text">Nome</b>
+                                    <p class="ls-label-info">Informe o nome completo</p>
+                                    {!! Form::text('name', null, array('placeholder' => 'Nome e sobrenome')) !!}
+                                    {!! Form::hidden('status', 'Desativado') !!}
+                                </label>
+                                <label class="ls-label">
+                                    <b class="ls-label-text">E-mail</b>
+                                    <p class="ls-label-info">O e-mail do usuário</p>
+                                    {!! Form::text('email', null, array('placeholder' => 'Nome e sobrenome')) !!}
+                                </label>
+                                <label class="ls-label">
+                                    <b class="ls-label-text">Senha</b>
+                                    <p class="ls-label-info">Informe a senha</p>
+                                    {!! Form::password('password', null, array('placeholder' => 'Insira a senha')) !!}
+                                </label>
+                            </fieldset>
+                            <fieldset class="col-md-12">
+                                <div class="ls-actions-btn">
+                                    <button class="ls-btn">Salvar</button>
+                                    <button class="ls-btn-danger">Excluir</button>
+                                </div>
+                            </fieldset>
+                            {!! Form::close() !!}
+                        </div>
+                    </div>
+                </div><!-- /.modal -->                
             </div>
         </div>
     </div>
